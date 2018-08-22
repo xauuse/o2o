@@ -12,10 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.beans.Transient;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 
 @Service
@@ -28,12 +28,11 @@ public class ShopServiceImpl implements ShopService{
     /**
      * 新增店铺测试
      * @param shop
-     * @param shopImg
+     * @param shopImgInputStream
      * @return
      */
-    @Override
     @Transient
-    public ShopExecution addShop(Shop shop, File shopImg) {
+    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
 
         if (shop == null){
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
@@ -46,9 +45,9 @@ public class ShopServiceImpl implements ShopService{
             if (effectedNum<=0){
                 throw new RuntimeException("店铺创建失败");
             }else {
-                if (shopImg!=null){
+                if (shopImgInputStream !=null){
                     try {
-                        addShopImg(shop,shopImg);
+                        addShopImg(shop, shopImgInputStream,fileName);
                     }catch (Exception e){
                         throw new ShopOperationException("add shop error1:"+e.toString());
                     }
@@ -66,9 +65,9 @@ public class ShopServiceImpl implements ShopService{
         return new ShopExecution(ShopStateEnum.Check,shop);
     }
 
-    private void addShopImg(Shop shop,File shopImg){
+    private void addShopImg(Shop shop,InputStream shopImgInputStream,String fileName){
         String dest = PathUtil.getShopImagePath(shop.getShopId());
-        String shopImgAddr = ImageUtil.generateThumbnail(shopImg,dest);
+        String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream,fileName,dest);
         logger.info("dest: "+dest);
         logger.info("shopImgAddr: "+shopImgAddr);
         shop.setShopImg(shopImgAddr);

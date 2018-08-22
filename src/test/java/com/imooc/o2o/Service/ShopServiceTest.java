@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class ShopServiceTest extends BaseTest {
 
@@ -21,7 +24,7 @@ public class ShopServiceTest extends BaseTest {
     ShopService shopService;
 
     @Test
-    public void addShopTest(){
+    public void addShopTest() throws FileNotFoundException {
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();
         Area area = new Area();
@@ -32,14 +35,15 @@ public class ShopServiceTest extends BaseTest {
         shop.setOwner(owner);
         shop.setArea(area);
         shop.setShopCategory(shopCategory);
-        shop.setShopName("测试的店铺22");
-        shop.setShopDesc("test1");
-        shop.setShopAddr("test1");
-        shop.setPhone("test1");
+        shop.setShopName("测试的店铺3");
+        shop.setShopDesc("test3");
+        shop.setShopAddr("test3");
+        shop.setPhone("test3");
         shop.setEnableStatus(ShopStateEnum.Check.getState());
         shop.setAdvice("审核中");
         File shopImg = new File("D:\\Learnning\\shop.jpg");
-        ShopExecution se=shopService.addShop(shop,shopImg);
+        InputStream inputStream = new FileInputStream(shopImg);
+        ShopExecution se=shopService.addShop(shop,inputStream,shopImg.getName());
         System.out.print("se:"+se.getStateInfo());
     }
 
