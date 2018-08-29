@@ -76,4 +76,18 @@ public class ShopCategory {
     public void setParent(ShopCategory parent) {
         this.parent = parent;
     }
+
+    @Override
+    public String toString() {
+        return "ShopCategory{" +
+                "shopCategoryId=" + shopCategoryId +
+                ", shopCateGoryName='" + shopCateGoryName + '\'' +
+                ", shopCateGoryDesc='" + shopCateGoryDesc + '\'' +
+                ", shopCateGoryImg='" + shopCateGoryImg + '\'' +
+                ", priority=" + priority +
+                ", createTime=" + createTime +
+                ", lastEditTime=" + lastEditTime +
+                ", parent=" + parent +
+                '}';
+    }
 }

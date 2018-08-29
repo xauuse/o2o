@@ -1,16 +1,18 @@
 $(function () {
-    var initUrl = '/shopadmin/getshopinitinfo';
-    var registerShopUrl = "/shopadmin/registershop";
+    var initUrl = '/o2o/shopadmin/getshopinitinfo';
+    var registerShopUrl = "/o2o/shopadmin/registershop";
     getShopInitInfo();
     function getShopInitInfo() {
-        $.getJson(initUrl,function (data) {
+        $.getJSON(initUrl,function (data) {
            if(data.success){
                var tempHtml = '';
                var tempAreaHtml = '';
                data.shopCategoryList.map(function (item,index){
-                   alert(item.shopCategoryId);
                    tempHtml += '<option data-id="'+item.shopCategoryId
-                            +'">'+item.shopCategoryName+'<option>';
+                            +'">'+item.shopCateGoryName+'<option>';
+                   console.log(item);
+                   console.log(item.shopCategoryId);
+                   console.log(item.shopCateGoryName);
                });
                data.areaList.map(function (item , index) {
                    tempAreaHtml += '<option data-id="'+item.areaId
