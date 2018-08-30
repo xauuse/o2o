@@ -10,9 +10,6 @@ $(function () {
                data.shopCategoryList.map(function (item,index){
                    tempHtml += '<option data-id="'+item.shopCategoryId
                             +'">'+item.shopCateGoryName+'<option>';
-                   console.log(item);
-                   console.log(item.shopCategoryId);
-                   console.log(item.shopCateGoryName);
                });
                data.areaList.map(function (item , index) {
                    tempAreaHtml += '<option data-id="'+item.areaId
@@ -44,6 +41,12 @@ $(function () {
             var formData = new FormData();
             formData.append('shopImg',shopImg);
             formData.append('shopStr',JSON.stringify(shop));
+            var verifyCodeActual = $('#j_captcha').val();
+            if(!verifyCodeActual){
+                $.toast('请输入验证码');
+                return ;
+            }
+            formData.append("verifyCodeActual",verifyCodeActual);
             $.ajax({
                 url:registerShopUrl,
                 type:'POST',
